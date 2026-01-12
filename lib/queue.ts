@@ -3,7 +3,7 @@
 
 import { Queue, Worker } from "bullmq"
 import { getEnv } from "./env"
-import { processMessage } from "./twilio-sender"
+import { processMessage } from "./sms-sender"
 
 let redis: any = null
 let smsQueue: Queue | null = null

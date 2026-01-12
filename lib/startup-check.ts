@@ -5,7 +5,6 @@
 
 import { getEnv } from "./env"
 import { db } from "./db"
-import { validateTwilioConnection } from "./twilio"
 
 export async function verifyStartup(): Promise<{
   success: boolean
@@ -17,7 +16,6 @@ export async function verifyStartup(): Promise<{
   const checks: Record<string, boolean> = {
     env: false,
     postgres: false,
-    twilio: false,
   }
 
   const errors: string[] = []
@@ -49,20 +47,6 @@ export async function verifyStartup(): Promise<{
     const msg = error instanceof Error ? error.message : String(error)
     errors.push(`PostgreSQL connection failed: ${msg}`)
     console.error("[startup] ✗ PostgreSQL connection failed:", msg)
-  }
-
-  // 3. Check Twilio credentials (optional for preview)
-  try {
-    const valid = await validateTwilioConnection()
-    checks.twilio = valid
-    if (valid) {
-      console.log("[startup] ✓ Twilio credentials validated")
-    } else {
-      console.warn("[startup] ⚠ Twilio validation returned false (optional)")
-    }
-  } catch (error) {
-    console.warn("[startup] ⚠ Twilio validation skipped (optional for preview)")
-    checks.twilio = true // Don't fail on Twilio for preview
   }
 
   const success = Object.values(checks).every((v) => v === true)

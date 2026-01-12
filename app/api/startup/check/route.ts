@@ -1,6 +1,6 @@
 /**
  * Startup verification endpoint
- * Validates all integrations: PostgreSQL, Redis, Twilio
+ * Validates all integrations: PostgreSQL, Redis, SMS Provider
  * Returns detailed status for debugging
  */
 import { NextResponse } from "next/server"

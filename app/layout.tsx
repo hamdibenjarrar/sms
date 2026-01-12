@@ -9,7 +9,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "SMS Commander - Send & Track Messages",
-  description: "Professional SMS sending platform with Twilio integration",
+  description: "Professional SMS sending platform",
   generator: "v0.app",
   icons: {
     icon: [

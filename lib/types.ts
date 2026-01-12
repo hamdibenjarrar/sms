@@ -45,16 +45,3 @@ export interface SendSmsRequest {
   }>
 }
 
-export interface TwilioWebhookStatus {
-  SmsStatus: string
-  MessageSid: string
-  AccountSid: string
-}
-
-export interface TwilioWebhookIncoming {
-  From: string
-  To: string
-  Body: string
-  MessageSid: string
-  AccountSid: string
-}

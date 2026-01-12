@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     // Save the reply message to database
     const replyMessage = await createMessage(null, user.userId, phone, message, "outbound")
 
-    // TODO: Send via Twilio (will be implemented in the queue system)
+    // TODO: Send via SMS provider (will be implemented in the queue system)
 
     return NextResponse.json({
       success: true,

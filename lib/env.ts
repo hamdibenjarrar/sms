@@ -6,9 +6,8 @@
 export interface ValidatedEnv {
   DATABASE_URL: string | undefined
   REDIS_URL: string | undefined
-  TWILIO_ACCOUNT_SID: string | undefined
-  TWILIO_AUTH_TOKEN: string | undefined
-  TWILIO_PHONE_NUMBER: string | undefined
+  TEXTLINK_API_KEY: string | undefined
+  TEXTLINK_SIM_ID: string | undefined
   JWT_SECRET: string
   NODE_ENV: string
   PORT: string
@@ -22,9 +21,7 @@ export function validateEnv(): ValidatedEnv {
   const required = [
     "DATABASE_URL",
     "REDIS_URL",
-    "TWILIO_ACCOUNT_SID",
-    "TWILIO_AUTH_TOKEN",
-    "TWILIO_PHONE_NUMBER",
+    "TEXTLINK_API_KEY",
     "JWT_SECRET",
   ]
 
@@ -45,9 +42,7 @@ export function validateEnv(): ValidatedEnv {
   return {
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,
-    TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
-    TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
-    TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
+    TEXTLINK_API_KEY: process.env.TEXTLINK_API_KEY,
     JWT_SECRET: process.env.JWT_SECRET!,
     NODE_ENV: process.env.NODE_ENV || "development",
     PORT: process.env.PORT || "3000",
@@ -64,9 +59,8 @@ export function getEnv(): ValidatedEnv {
   return {
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,
-    TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
-    TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
-    TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
+    TEXTLINK_API_KEY: process.env.TEXTLINK_API_KEY,
+    TEXTLINK_SIM_ID: process.env.TEXTLINK_SIM_ID,
     JWT_SECRET: jwtSecret,
     NODE_ENV: process.env.NODE_ENV || "development",
     PORT: process.env.PORT || "3000",

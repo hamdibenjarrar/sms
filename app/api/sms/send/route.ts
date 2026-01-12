@@ -2,8 +2,10 @@ import { type NextRequest, NextResponse } from "next/server"
 import { getUserFromRequest } from "@/lib/middleware"
 import { createCampaign, createMessage } from "@/lib/db"
 // import { queueSmsMessage } from "@/lib/queue" // Queues don't work well on Serverless Vercel
-import { processMessage } from "@/lib/twilio-sender" // Direct send for Vercel
+import { processMessage } from "@/lib/sms-sender" // Direct send for Vercel
 import type { SendSmsRequest } from "@/lib/types"
+
+import { normalizePhoneNumber } from "@/lib/sms-utils"
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,7 +26,10 @@ export async function POST(request: NextRequest) {
     // Create messages and queue them
     const messageIds: number[] = []
     for (const recipient of body.recipients) {
-      const message = await createMessage(campaign.id, user.userId, recipient.phone, body.messageTemplate, "outbound")
+      // Normalize phone number to ensure E.164 format (e.g. +1234567890)
+      const normalizedPhone = normalizePhoneNumber(recipient.phone)
+      
+      const message = await createMessage(campaign.id, user.userId, normalizedPhone, body.messageTemplate, "outbound")
       messageIds.push(message.id)
 
       // Vercel compatible: Send immediately (Serverless functions shouldn't rely on background workers)
