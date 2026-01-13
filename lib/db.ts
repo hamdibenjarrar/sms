@@ -153,14 +153,15 @@ export async function updateMessageStatus(messageId: number, status: string, err
 }
 
 export async function updateMessageWithProviderId(messageId: number, providerId: string) {
+  // Note: Ensure migration scripts/003-migrate-twilio-to-provider.sql is run
   const result = await db.query(
-    "UPDATE messages SET twilio_sid = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *",
+    "UPDATE messages SET provider_sid = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *",
     [providerId, messageId],
   )
   return result[0]
 }
 
 export async function getMessageByProviderId(providerId: string) {
-  const result = await db.query("SELECT * FROM messages WHERE twilio_sid = $1", [providerId])
+  const result = await db.query("SELECT * FROM messages WHERE provider_sid = $1", [providerId])
   return result[0]
 }

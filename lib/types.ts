@@ -24,7 +24,7 @@ export interface Message {
   direction: "outbound" | "inbound"
   body: string
   status: "queued" | "sent" | "delivered" | "failed"
-  twilio_sid: string | null
+  provider_sid: string | null
   error: string | null
   created_at: string
   updated_at: string

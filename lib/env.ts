@@ -6,8 +6,8 @@
 export interface ValidatedEnv {
   DATABASE_URL: string | undefined
   REDIS_URL: string | undefined
-  TEXTLINK_API_KEY: string | undefined
-  TEXTLINK_SIM_ID: string | undefined
+  RAPIDAPI_KEY: string | undefined
+  RAPIDAPI_HOST: string | undefined
   JWT_SECRET: string
   NODE_ENV: string
   PORT: string
@@ -21,7 +21,8 @@ export function validateEnv(): ValidatedEnv {
   const required = [
     "DATABASE_URL",
     "REDIS_URL",
-    "TEXTLINK_API_KEY",
+    "RAPIDAPI_KEY",
+    "RAPIDAPI_HOST",
     "JWT_SECRET",
   ]
 
@@ -42,7 +43,8 @@ export function validateEnv(): ValidatedEnv {
   return {
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,
-    TEXTLINK_API_KEY: process.env.TEXTLINK_API_KEY,
+    RAPIDAPI_KEY: process.env.RAPIDAPI_KEY,
+    RAPIDAPI_HOST: process.env.RAPIDAPI_HOST,
     JWT_SECRET: process.env.JWT_SECRET!,
     NODE_ENV: process.env.NODE_ENV || "development",
     PORT: process.env.PORT || "3000",
@@ -59,8 +61,8 @@ export function getEnv(): ValidatedEnv {
   return {
     DATABASE_URL: process.env.DATABASE_URL,
     REDIS_URL: process.env.REDIS_URL,
-    TEXTLINK_API_KEY: process.env.TEXTLINK_API_KEY,
-    TEXTLINK_SIM_ID: process.env.TEXTLINK_SIM_ID,
+    RAPIDAPI_KEY: process.env.RAPIDAPI_KEY,
+    RAPIDAPI_HOST: process.env.RAPIDAPI_HOST,
     JWT_SECRET: jwtSecret,
     NODE_ENV: process.env.NODE_ENV || "development",
     PORT: process.env.PORT || "3000",

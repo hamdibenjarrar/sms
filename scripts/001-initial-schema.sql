@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS messages (
   direction VARCHAR(20) NOT NULL DEFAULT 'outbound',
   body TEXT NOT NULL,
   status VARCHAR(50) DEFAULT 'queued',
-  twilio_sid VARCHAR(255),
+  provider_sid VARCHAR(255),
   error TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

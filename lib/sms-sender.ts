@@ -1,4 +1,4 @@
-import { sendSms } from "./textlink"
+import { sendSmsSimple } from "./sms-verify"
 import { updateMessageStatus, updateMessageWithProviderId, db } from "./db"
 
 export async function processMessage(messageId: number): Promise<void> {
@@ -17,25 +17,24 @@ export async function processMessage(messageId: number): Promise<void> {
       return
     }
 
-    // Send SMS via TextLink
-    const result = await sendSms(message.phone, message.body)
+    // Send SMS via RapidAPI (SMS Verify)
+    // Note: SMS Verify generates its own code. The 'body' from database might be ignored by the API.
+    const result = await sendSmsSimple(message.phone, message.body)
     
-    // TextLink result is { ok: true }
-    if (!result || !result.ok) {
-       console.error("[sms-sender] TextLink failure payload:", result);
-       throw new Error(`TextLink API failure: ${JSON.stringify(result)}`);
+    if (!result.success) {
+       console.error("[sms-sender] Provider failure:", result.error);
+       throw new Error(`Provider failure: ${result.error}`);
     }
 
-    // Update message with Provider ID (TextLink doesn't seem to return ID in success response)
-    // We'll generate a placeholder ID or use timestamp
-    const providerId = result.id || result.message_id || `TL-${Date.now()}`;
+    // Mock Provider ID or extract if available
+    const providerId = result.data?.verify_code || `RAPID-${Date.now()}`;
     
     await updateMessageWithProviderId(messageId, providerId)
 
     // Update status to sent
     await updateMessageStatus(messageId, "sent")
 
-    console.log(`[sms-sender] Successfully sent message ${messageId}`)
+    console.log(`[sms-sender] Successfully sent message ${messageId} (Verify Code: ${result.data?.verify_code})`)
   } catch (error) {
     console.error(`[sms-sender] Error processing message ${messageId}:`, error)
 

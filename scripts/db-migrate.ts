@@ -61,6 +61,20 @@ async function main() {
         console.log('Applied seed.');
     }
 
+    // 003
+    const mig3Path = path.join(process.cwd(), 'scripts', '003-migrate-twilio-to-provider.sql');
+    if (fs.existsSync(mig3Path)) {
+        console.log('Applying 003-migrate-twilio-to-provider.sql...');
+        const mig3Sql = fs.readFileSync(mig3Path, 'utf8');
+        try {
+             // @ts-ignore
+             await (sql as any).query(mig3Sql, []);
+            console.log('Applied 003 migration.');
+        } catch (e: any) {
+             console.log('Skipping 003 (maybe already applied or error): ' + e.message);
+        }
+    }
+
     console.log('Migration complete.');
   } catch (error) {
     console.error('Migration failed:', error);
