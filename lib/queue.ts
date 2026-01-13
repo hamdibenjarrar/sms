@@ -33,10 +33,14 @@ export async function getRedis(): Promise<any> {
         // For Upstash, strict TLS with family: 6 often fails locally on Node 18+.
         // Let's ensure family: 0 (IPv4/IPv6 auto) and rejectUnauthorized: false if needed.
         redis = new Redis(redisUrl, {
-          family: 0, 
-          // tls: { rejectUnauthorized: false }, // Uncomment if self-signed certs (Upstash is usually public CA)
+          family: 0,
           maxRetriesPerRequest: null,
           enableReadyCheck: false,
+          retryStrategy(times) {
+            const delay = Math.min(times * 50, 2000)
+            return delay
+          },
+          keepAlive: 10000,
         })
 
         redis.on("error", (error: Error) => {
