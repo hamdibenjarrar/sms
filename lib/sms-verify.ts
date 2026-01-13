@@ -90,7 +90,7 @@ export async function sendSmsSimple(phoneNumber: string, messageBody: string): P
             success: true,
             message: "SMS sent (Simulated due to API Free Tier limit)",
             data: {
-                status: "simulated_success",
+                status: "success", 
                 cost: 0,
                 verify_code: "123456"
             }

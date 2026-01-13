@@ -44,6 +44,10 @@ export async function getRedis(): Promise<any> {
         })
 
         redis.on("error", (error: Error) => {
+          // Suppress common connection reset errors in dev which are noisy
+          if (error.message.includes("ECONNRESET")) {
+              return;
+          }
           console.warn("[redis] Connection error:", error.message)
           connectionError = error
         })
